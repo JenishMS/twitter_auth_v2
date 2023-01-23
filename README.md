@@ -18,7 +18,7 @@ and the Flutter guide for
 [![popularity](https://img.shields.io/pub/popularity/twitter_auth_v2?logo=dart)](https://pub.dev/packages/twitter_auth_v2/score) 
 [![pub points](https://img.shields.io/pub/points/twitter_auth_v2?logo=dart)](https://pub.dev/packages/twitter_auth_v2/score)
 
-Flutter package for twitter authentication. (twitter_auth_v2)[https://pub.dev/packages/twitter_auth_v2] 
+Flutter package for twitter authentication. [twitter_auth_v2](https://pub.dev/packages/twitter_auth_v2) 
 
 ## Twitter Configuration
 
