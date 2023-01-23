@@ -11,13 +11,61 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-# Twitter Authentication
+# twitter_auth_v2
 
-Twitter v2 authentication
+[![pub package](https://img.shields.io/pub/v/twitter_auth_v2.svg)](https://pub.dev/packages/twitter_auth_v2) 
+[![likes](https://img.shields.io/pub/likes/twitter_auth_v2?logo=dart)](https://pub.dev/packages/twitter_auth_v2/score) 
+[![popularity](https://img.shields.io/pub/popularity/twitter_auth_v2?logo=dart)](https://pub.dev/packages/twitter_auth_v2/score) 
+[![pub points](https://img.shields.io/pub/points/twitter_auth_v2?logo=dart)](https://pub.dev/packages/twitter_auth_v2/score)
+
+Flutter package for twitter authentication. (twitter_auth_v2)[https://pub.dev/packages/twitter_auth_v2] 
+
+## Twitter Configuration
+
+- Create twitter app [documentation](https://developer.twitter.com)
+- Add callback url
+    ```
+    app://example
+    ```
+
+## Android Configuration
+
+Add intent as follows:
+
+```xml
+    <intent-filter>
+      <action android:name="android.intent.action.VIEW" />
+      <category android:name="android.intent.category.DEFAULT" />
+      <category android:name="android.intent.category.BROWSABLE" />
+      <!-- Accept redirect url like "app://example" -->
+      <data android:scheme="app"
+            android:host="example" />
+    </intent-filter>
+```
+
+## IOS Configuration
+
+Change Info.plist as follows
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleTypeRole</key>
+    <string>Editor</string>
+    <key>CFBundleURLName</key>
+    <string></string>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>app</string>
+    </array>
+  </dict>
+</array>
+```
 
 ## Usage
 
-to `/example` folder.
+To use this plugin, add `twitter_auth_v2` as a [dependency in your pubspec.yaml file.](https://flutter.dev/platform-plugins/) 
 
 ```dart
 void _authentication() async {
@@ -30,7 +78,7 @@ void _authentication() async {
           child: CircularProgressIndicator(),
         ),
         redirectUri: '[REDIRECT_URI]');
-    TwitterAuthResult? data = await client.login(scopes: Scope.values);
+    TwitterAuthResult? data = await client.login(scopes: TwitterScope.values);
     if (data == null) return;
     setState(() {
       _token = data.accessToken;
@@ -66,3 +114,9 @@ void _authentication() async {
     );
   }
 ```
+
+## Licence
+   [MIT](https://github.com/JenishMS/twitter_auth_v2/blob/master/LICENSE)
+   
+
+Contributions of any kind are welcome!
