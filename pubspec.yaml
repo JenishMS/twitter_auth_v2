@@ -1,7 +1,8 @@
 name: twitter_auth_v2
-description: Package for twitter v2 authentication.
-version: 1.0.2
-homepage: https://github.com/JenishMS/twitter_auth_v2
+description: Package for twitter authentication.
+version: 1.0.3
+homepage: https://github.com/JenishMS
+repository: https://github.com/JenishMS/twitter_auth_v2
 
 environment:
   sdk: ">=2.18.6 <3.0.0"
