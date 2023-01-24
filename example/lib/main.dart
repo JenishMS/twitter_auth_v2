@@ -40,14 +40,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _authentication() async {
     final TwitterAuthClient client = TwitterAuthClient(
-        callbackUrlScheme: '[CALLBACK_SCHEME]',
-        clientId: '[CLIENT_ID]',
-        clientSecret: '[CLIENT_SECRET]',
+        callbackUrlScheme: 'com.theproindia.stalinani2',
+        clientId: 'YmVFVnh3alFEVTRBMDFMODQyMk06MTpjaQ',
+        clientSecret: 'u4LeMTgv4gcL2onPDkTYmTRxsuEczYLhYi5Iw69ZNMJxAepDwx',
         navigatorKey: navigatorKey,
         loader: const Center(
           child: CircularProgressIndicator(),
         ),
-        redirectUri: '[REDIRECT_URI]');
+        redirectUri: 'com.theproindia.stalinani2://');
     TwitterAuthResult? data = await client.login(scopes: TwitterScope.values);
     if (data == null) return;
     setState(() {

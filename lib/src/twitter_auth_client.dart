@@ -30,7 +30,7 @@ class TwitterAuthClient {
       this.userAgent});
 
   Future<TwitterAuthResult?> login({required List<TwitterScope> scopes}) async {
-    final String codeVerifier = _generateSecureAlphaNumeric(80);
+    final String codeVerifier = _generateRandomString(80);
     final String codeChallenge = _generateCodeChallenge(codeVerifier);
 
     final Map<String, String> response =
@@ -46,7 +46,7 @@ class TwitterAuthClient {
   Future<Map<String, String>> _requestCode(
       {required List<TwitterScope> scopes,
       required String codeChallenge}) async {
-    final String state = _generateSecureAlphaNumeric(25);
+    final String state = _generateRandomString(25);
     Uri requestUri = Uri.https(
       'twitter.com',
       '/i/oauth2/authorize',
@@ -72,8 +72,10 @@ class TwitterAuthClient {
     await navigatorKey.currentState!.push(
       MaterialPageRoute(
         builder: (context) => Scaffold(
-          body: Stack(
-            children: [loader, webView],
+          body: SafeArea(
+            child: Stack(
+              children: [loader, webView],
+            ),
           ),
         ),
       ),
@@ -112,8 +114,7 @@ class TwitterAuthClient {
     return NavigationDecision.navigate;
   }
 
-  @override
-  Future<Map<String, dynamic>> refreshAccessToken(
+  Future<TwitterAuthResult> refreshAccessToken(
     final String refreshToken,
   ) async {
     final response = await http.post(
@@ -128,11 +129,15 @@ class TwitterAuthClient {
       },
     );
 
-    return jsonDecode(response.body);
+    Map<String, dynamic> tokenData = jsonDecode(response.body);
+
+    return TwitterAuthResult(tokenData['access_token'],
+        tokenData['refresh_token'], tokenData['expires_in']);
   }
 
   _closeWebView() => navigatorKey.currentState!.pop();
 
+  // Access token request
   Future<TwitterAuthResult?> _requestAccessToken({
     required List<TwitterScope> scopes,
     required String code,
@@ -158,13 +163,15 @@ class TwitterAuthClient {
         tokenData['refresh_token'], tokenData['expires_in']);
   }
 
-  String _generateSecureAlphaNumeric(final int length) {
+  // generate random string
+  String _generateRandomString(final int length) {
     final random = Random.secure();
     final values = List<int>.generate(length, (i) => random.nextInt(255));
 
     return base64UrlEncode(values);
   }
 
+  // create code challenge
   String _generateCodeChallenge(String codeVerifier) {
     final digest = sha256.convert(utf8.encode(codeVerifier));
     final codeChallenge = base64UrlEncode(digest.bytes);
@@ -174,6 +181,7 @@ class TwitterAuthClient {
     return codeChallenge;
   }
 
+  // build authorization request header
   Map<String, String> _buildAuthorizationHeader({
     required String clientId,
     required String clientSecret,

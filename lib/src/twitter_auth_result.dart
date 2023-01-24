@@ -1,5 +1,11 @@
 class TwitterAuthResult {
-  TwitterAuthResult(this.accessToken, this.refreshToken, this.expiresIn);
+  TwitterAuthResult(
+    this.accessToken,
+    this.refreshToken,
+    int expireAt,
+  ) : expiresIn = DateTime.now()
+            .add(Duration(seconds: expireAt))
+            .millisecondsSinceEpoch;
 
   final String accessToken;
 
