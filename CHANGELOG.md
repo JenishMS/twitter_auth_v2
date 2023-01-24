@@ -6,7 +6,7 @@
 
 - Readme file changes
 
-## 1.0.4-beta.1
+## 1.0.4-beta.2
 
 - Refresh token reponse changes
 - Fix token expire in timestamp
